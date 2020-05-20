@@ -15,6 +15,8 @@ public class Client {
 	
 	private String name;
 	private String firstName;
+	
+	@Column(unique = true)
 	private String phoneNumber;
 	private String type;
 	private String address;
