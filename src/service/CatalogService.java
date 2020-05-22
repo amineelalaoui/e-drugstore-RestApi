@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import model.Catalog;
+import model.Provider;
 
 @Stateless
 public class CatalogService {
@@ -19,6 +20,17 @@ public class CatalogService {
 	
 	public Response addCatalog(Catalog catalog) {
 		try {
+			if(catalog.getProvider()!=null) {
+				if(catalog.getId()!=null) {
+					Provider p = em.find(Provider.class, catalog.getProvider().getId());
+					if(p==null) {
+						em.persist(catalog.getProvider());
+						em.flush();
+					}
+					else
+						catalog.setProvider(p);
+				}
+			}
 			em.persist(catalog);
 		}catch(Exception e) {
 			return Response.status(Response.Status.NOT_ACCEPTABLE)
