@@ -53,7 +53,7 @@ public class CatalogService {
 	
 	@SuppressWarnings("unchecked")
 	public Collection<Catalog> getCatalogs(){
-		Query qr = em.createQuery("select c from catalog c");
+		Query qr = em.createQuery("select c from Catalog c");
 		return qr.getResultList();
 	}
 

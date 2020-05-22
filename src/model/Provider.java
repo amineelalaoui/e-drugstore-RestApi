@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity
 public class Provider {
 
@@ -73,6 +76,29 @@ public class Provider {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return getJSON().toString();
+	}
+	
+	
+	public JSONObject getJSON() {
+		JSONObject provider = new JSONObject();
+		try {
+			provider.put("id", id);
+			provider.put("name",name);
+			provider.put("firstName", firstName);
+			provider.put("address", address);
+			provider.put("phoneNumber", phoneNumber);
+			provider.put("email", email);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return provider;
 	}
 	
 	

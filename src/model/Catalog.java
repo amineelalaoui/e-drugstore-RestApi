@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity
 public class Catalog {
 
@@ -69,6 +72,26 @@ public class Catalog {
 	public void setProvider(Provider provider) {
 		this.provider = provider;
 	}
+
+	@Override
+	public String toString() {
+		JSONObject catalog = new JSONObject();
+		try {
+			catalog.put("id", id);
+			catalog.put("name", name);
+			catalog.put("logo", logo);
+			if(productList!=null)
+				catalog.append("productList", productList.toString());
+			if(provider!=null)
+				catalog.put("provider", provider.getJSON());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return catalog.toString();
+	}
+	
+	
 	
 	
 	
