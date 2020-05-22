@@ -1,32 +1,39 @@
 package service;
 
+import javax.ejb.EJBTransactionRolledbackException;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import exceptions.DuplicataException;
 import model.Client;
 
+@Stateless
 public class ClientService {
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "MaPU")
 	private EntityManager em;
 	
-	public boolean addClient(String firstName, String lastName, String phoneNumber, String type, String address,String email, String username, String password, boolean crypted) {
-		Client c = new Client();
-		c.setFirstName(firstName);
-		c.setName(lastName);
-		c.setEmail(email);
-		c.setAddress(address);
-		c.setPhoneNumber(phoneNumber);
-		c.setUsername(username);
-		c.setType(type);
-		//plain text password
-		if(!crypted) {
-			//TODO use the bcrypt algorith to hash the password
+	public Response addClient(Client c) {
+		try {
+			em.persist(c);
+		}catch(Exception e) {
+			return Response.status(Response.Status.NOT_ACCEPTABLE)
+		            .entity("{\n"
+		            		+ "\t \"error\": \"" + e.getMessage() +  "\"\n"
+		            		+ "}")
+		            .type(MediaType.APPLICATION_JSON)
+		            .build();
 		}
-		em.persist(c);
-		//TODO : check existance of the email
-		return true;
+		return Response.status(Response.Status.OK)
+	            .entity(c)
+	            .type(MediaType.APPLICATION_JSON)
+	            .build();
 	}
+
 	
 	
 }
