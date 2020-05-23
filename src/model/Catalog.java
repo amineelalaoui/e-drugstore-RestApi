@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +27,7 @@ public class Catalog {
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Product> productList;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Provider provider;
 	
 	public Catalog() {
@@ -80,8 +81,13 @@ public class Catalog {
 			catalog.put("id", id);
 			catalog.put("name", name);
 			catalog.put("logo", logo);
-			if(productList!=null)
-				catalog.append("productList", productList.toString());
+			if(productList!=null) {
+				JSONArray jsonProduct = new JSONArray();
+				for(Product product : productList) {
+					jsonProduct.put(product.getJSON());
+				}
+				catalog.append("productList", jsonProduct);
+			}
 			if(provider!=null)
 				catalog.put("provider", provider.getJSON());
 		} catch (Exception e) {

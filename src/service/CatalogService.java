@@ -31,6 +31,16 @@ public class CatalogService {
 						catalog.setProvider(p);
 				}
 			}
+			/*if(catalog.getProductList()!=null && catalog.getProductList().size()!=0) {
+				for(Product p : catalog.getProductList()) {
+					if(em.find(Product.class, p.getId())==null) {
+						em.persist(p);
+						em.flush();
+					}
+					
+						
+				}
+			}*/
 			em.persist(catalog);
 		}catch(Exception e) {
 			return Response.status(Response.Status.NOT_ACCEPTABLE)
@@ -46,10 +56,6 @@ public class CatalogService {
 	            .build();
 	}
 	
-	public Catalog getCatalogByName(String name) {
-		Catalog catalog = em.find(Catalog.class, name);
-		return catalog;
-	}
 	
 	@SuppressWarnings("unchecked")
 	public Collection<Catalog> getCatalogs(){

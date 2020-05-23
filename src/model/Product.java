@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity
 public class Product {
 	
@@ -18,16 +21,16 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Catalog> catalogList;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Category productCategory;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Cart> carts;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Orders> orders;
 	
 	private String description;
@@ -90,6 +93,27 @@ public class Product {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", catalogList=" + catalogList + ", productCategory=" + productCategory
+				+ ", carts=" + carts + ", orders=" + orders + ", description=" + description + ", designation="
+				+ designation + ", price=" + price + ", photo=" + photo + "]";
+	}
+	
+	public JSONObject getJSON() {
+		JSONObject jo = new JSONObject();
+		try {
+			jo.put("id", id);
+			jo.put("productCategory", productCategory);
+			jo.put("description", description);
+			jo.put("designation", designation);
+			jo.put("price", price);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jo;
 	}
 	
 	
