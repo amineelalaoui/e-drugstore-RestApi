@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 @Entity
 public class Category {
 
@@ -15,7 +18,7 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String CategoryName;
+	private String categoryName;
 	private String description;
 	private String picturePath;
 	
@@ -35,11 +38,11 @@ public class Category {
 	}
 
 	public String getCategoryName() {
-		return CategoryName;
+		return categoryName;
 	}
 
 	public void setCategoryName(String categoryName) {
-		CategoryName = categoryName;
+		this.categoryName = categoryName;
 	}
 
 	public String getDescription() {
@@ -64,6 +67,28 @@ public class Category {
 
 	public void setProductList(List<Product> productList) {
 		this.productList = productList;
+	}
+	
+	public JSONObject getJSON() {
+		JSONObject catalog = new JSONObject();
+		try {
+			catalog.put("id", id);
+			catalog.put("categoryName", categoryName);
+			catalog.put("description", description);
+			catalog.put("picturePath", picturePath);
+			if(productList!=null) {
+				JSONArray jsonProduct = new JSONArray();
+				for(Product product : productList) {
+					jsonProduct.put(product.getJSON());
+				}
+				catalog.append("productList", jsonProduct);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catalog;
+
 	}
 	
 	

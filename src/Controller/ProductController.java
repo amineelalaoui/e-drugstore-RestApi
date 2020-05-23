@@ -15,7 +15,7 @@ import org.json.JSONArray;
 import model.Product;
 import service.ProductService;
 
-@Path("/product")
+@Path("product")
 @RequestScoped
 public class ProductController {
 	

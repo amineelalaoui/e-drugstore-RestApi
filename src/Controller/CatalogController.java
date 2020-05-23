@@ -44,11 +44,11 @@ public class CatalogController {
 			body.append(catalog.toString());
 			body.append(",\n");
 		}
-		if(catalogs!=null)
+		if(catalogs!=null && catalogs.size()!=0)
 			body.delete(body.lastIndexOf(","), body.lastIndexOf(",")+1);
 		body.append("]");
 		return Response.status(Response.Status.OK)
-	            .entity(catalogs!=null? body.toString() : "")
+	            .entity(catalogs!=null && catalogs.size()!=0 ? body.toString() : "")
 	            .type(MediaType.APPLICATION_JSON)
 	            .build();
 	}

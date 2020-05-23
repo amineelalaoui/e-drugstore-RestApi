@@ -4,7 +4,9 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import controller.CatalogController;
+import controller.CategoryController;
 import controller.ClientController;
+import controller.ProductController;
 
 @ApplicationPath("/rest")
 public class MainApplication extends Application {
@@ -20,6 +22,8 @@ public class MainApplication extends Application {
 	private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ClientController.class);
         resources.add(CatalogController.class);
+        resources.add(ProductController.class);
+        resources.add(CategoryController.class);
 	}
 
 }

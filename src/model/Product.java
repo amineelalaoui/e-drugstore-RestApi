@@ -105,7 +105,7 @@ public class Product {
 		JSONObject jo = new JSONObject();
 		try {
 			jo.put("id", id);
-			jo.put("productCategory", productCategory);
+			jo.put("productCategory", productCategory.getJSON());
 			jo.put("description", description);
 			jo.put("designation", designation);
 			jo.put("price", price);

@@ -31,16 +31,7 @@ public class CatalogService {
 						catalog.setProvider(p);
 				}
 			}
-			/*if(catalog.getProductList()!=null && catalog.getProductList().size()!=0) {
-				for(Product p : catalog.getProductList()) {
-					if(em.find(Product.class, p.getId())==null) {
-						em.persist(p);
-						em.flush();
-					}
-					
-						
-				}
-			}*/
+			//todo : save or update instead of persist
 			em.persist(catalog);
 		}catch(Exception e) {
 			return Response.status(Response.Status.NOT_ACCEPTABLE)
