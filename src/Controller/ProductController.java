@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Collection;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -82,16 +84,22 @@ public class ProductController {
 	@Path("/getbycat/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getProductByIdCategory(@PathParam("id") long id) {
-		Product p = productService.getProductByIdCategory(id);
-		if(p!=null)
+		Collection<Product> p = productService.getProductByIdCategory(id);
+		if(p!=null) {
+			JSONArray products = new JSONArray();
+			for(Product product : p) {
+				products.put(product.getJSON());
+			}
 			return Response.status(Response.Status.OK)
 					.header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Allow-Credentials", "true")
 		    		.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
 		    		.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-					.entity(p.getJSON().toString())
+					.entity(products.toString())
 					.type(MediaType.APPLICATION_JSON)
 					.build();
+		}
+			
 		return Response.status(Response.Status.OK)
 				.header("Access-Control-Allow-Origin", "*")
 		        .header("Access-Control-Allow-Credentials", "true")

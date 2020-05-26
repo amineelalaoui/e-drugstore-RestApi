@@ -63,4 +63,32 @@ public class CategoryService {
 		return p;
 	}
 	
+	public boolean deleteById(long id) {
+		try {
+		Category cat = (Category) em.find(Category.class, id);
+			em.remove(cat);
+		}catch(Exception e) {
+			return false;
+		}
+		return true;
+		
+	}
+	
+	public Response update(Category c) {
+		try {
+			em.merge(c);
+		}catch(Exception e){
+			return Response.status(Response.Status.NOT_ACCEPTABLE)
+		            .entity("{\n"
+		            		+ "\t \"error\": \"" + e.getMessage() +  "\"\n"
+		            		+ "}")
+		            .type(MediaType.APPLICATION_JSON)
+		            .build();
+		}
+
+		return Response.status(Response.Status.OK)
+	            .entity(c.getJSON().toString())
+	            .type(MediaType.APPLICATION_JSON)
+	            .build();
+	}
 }
