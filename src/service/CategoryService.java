@@ -75,4 +75,14 @@ public class CategoryService {
 	            .build();
 	}
 	
+	public boolean delete(Category c) {
+		try {
+			em.remove(c);
+		}catch(Exception e){
+			return false;
+		}
+
+		return true;
+	}
+	
 }

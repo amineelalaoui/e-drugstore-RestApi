@@ -55,5 +55,30 @@ public class CategoryController {
 				.build();
 	}
 	
+	@POST
+	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateCategory(Category category) {
+		return categoryService.update(category);
+	}
+	
+	@POST
+	@Path("/delete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeCategory(Category category) {
+		if(categoryService.delete(category)) {
+			return Response.status(Response.Status.OK)
+					.entity("{\"success\": \"deleted\"}")
+					.type(MediaType.APPLICATION_JSON)
+					.build();
+		}
+		return Response.status(Response.Status.OK)
+				.entity("{\"error\": \"error occured during the operation\"}")
+				.type(MediaType.APPLICATION_JSON)
+				.build();
+	}
+	
 	
 }
