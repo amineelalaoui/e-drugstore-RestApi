@@ -85,4 +85,17 @@ public class CategoryService {
 		return true;
 	}
 	
+	public boolean deleteById(Long id) {
+		Query qr = em.createQuery("SELECT c from Category c where c.id=:id");
+		qr.setParameter("id", id);
+		Category c = (Category) qr.getSingleResult();
+		try {
+			em.remove(c);
+		}catch(Exception e){
+			return false;
+		}
+
+		return true;
+	}
+	
 }

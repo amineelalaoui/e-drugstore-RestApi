@@ -80,5 +80,22 @@ public class CategoryController {
 				.build();
 	}
 	
+	@POST
+	@Path("/deletebyid/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeCategory(@PathParam("id") long id) {
+		if(categoryService.deleteById(id)) {
+			return Response.status(Response.Status.OK)
+					.entity("{\"success\": \"deleted\"}")
+					.type(MediaType.APPLICATION_JSON)
+					.build();
+		}
+		return Response.status(Response.Status.OK)
+				.entity("{\"error\": \"error occured during the operation\"}")
+				.type(MediaType.APPLICATION_JSON)
+				.build();
+	}
+	
 	
 }
