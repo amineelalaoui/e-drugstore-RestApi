@@ -15,6 +15,7 @@ import org.json.JSONArray;
 
 import com.sun.jersey.spi.container.ParamQualifier;
 
+import model.Category;
 import model.Product;
 import service.ProductService;
 
@@ -72,6 +73,32 @@ public class ProductController {
 			    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 	            .entity("{\n"
 	            		+ "\t \"error\": \"no product available with this id\"\n"
+	            		+ "}")
+	            .type(MediaType.APPLICATION_JSON)
+	            .build();
+	}
+	
+	@GET
+	@Path("/get/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProductByIdCategory(@PathParam("id") long id) {
+		Product p = productService.getProductByIdCategory(id);
+		if(p!=null)
+			return Response.status(Response.Status.OK)
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Credentials", "true")
+		    		.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+		    		.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+					.entity(p.getJSON().toString())
+					.type(MediaType.APPLICATION_JSON)
+					.build();
+		return Response.status(Response.Status.OK)
+				.header("Access-Control-Allow-Origin", "*")
+		        .header("Access-Control-Allow-Credentials", "true")
+			    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+			    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+	            .entity("{\n"
+	            		+ "\t \"error\": \"no product available with this category id\"\n"
 	            		+ "}")
 	            .type(MediaType.APPLICATION_JSON)
 	            .build();

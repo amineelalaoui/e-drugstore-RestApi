@@ -54,4 +54,14 @@ public class ProductService {
 		return p;
 	}
 	
+	
+	public Product getProductByIdCategory(Long id) {
+		try {
+		Query qr = em.createQuery("select p from Product p where p.productCategory_id=:id");
+		qr.setParameter("id", id);
+		return (Product) qr.getSingleResult();
+		}catch(Exception e) {
+			return null;
+		}
+	}
 }
