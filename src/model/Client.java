@@ -145,8 +145,13 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "{\n" + "\"id: \"" + "\""  + id  + "\"" + ",\n \"name\": " + "\"" + name + "\""  + ",\n \"firstName\": " + "\"" + firstName + "\" , \n \"phoneNumber\": " +"\"" + phoneNumber
+		return "{\n" + "\"id\" : " + "\""  + id  + "\"" + ",\n \"name\": " + "\"" + name + "\""  + ",\n \"firstName\": " + "\"" + firstName + "\" , \n \"phoneNumber\": " +"\"" + phoneNumber
 				+ "\" ,\n \"type\":" + "\"" +  type + "\",\n \"address\":" + "\"" + address +  "\",\n \"username\":" + "\"" + username + "\",\n \"email\":" + "\"" +  email + "\"\n}";
+	}
+	
+	public String getJSON(String token) {
+		return "{\n" + "\"id\" : " + "\""  + id  + "\"" + ",\n \"name\": " + "\"" + name + "\""  + ",\n \"firstName\": " + "\"" + firstName + "\" , \n \"phoneNumber\": " +"\"" + phoneNumber
+				+ "\" ,\n \"type\":" + "\"" +  type + "\",\n \"address\":" + "\"" + address +  "\",\n \"username\":" + "\"" + username + "\",\n \"email\":" + "\"" +  email + "\",\n\t\"token\" : \"" + token + "\"\n}";
 	}
 	
 	

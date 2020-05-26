@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+
 @Entity
 public class Orders {
 
@@ -68,6 +71,23 @@ public class Orders {
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+	
+	public JSONObject getJSON() {
+		JSONObject object = new JSONObject();
+		object.put("id", id);
+		object.put("orderDate", orderDate);
+		object.put("orderState", orderState);
+		if(productList!=null) {
+			JSONArray productArray = new JSONArray();
+			for(Product p: productList ) {
+				productArray.add(p.getJSON());
+			}
+			object.put("productList", productArray);
+		}
+		object.put("client", client).toString();
+		
+		return object;
 	}
 	
 	

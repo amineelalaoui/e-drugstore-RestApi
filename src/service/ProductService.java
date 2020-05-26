@@ -22,6 +22,10 @@ public class ProductService {
 		em.persist(p);
 		}catch(Exception e) {
 			return Response.status(Response.Status.NOT_ACCEPTABLE)
+					.header("Access-Control-Allow-Origin", "*")
+			        .header("Access-Control-Allow-Credentials", "true")
+				    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+				    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 		            .entity("{\n"
 		            		+ "\t \"error\": \"" + e.getMessage() +  "\"\n"
 		            		+ "}")
@@ -30,6 +34,10 @@ public class ProductService {
 		}
 		
 		return Response.status(Response.Status.OK)
+					   .header("Access-Control-Allow-Origin", "*")
+		        	   .header("Access-Control-Allow-Credentials", "true")
+			    	   .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+			    	   .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 					   .entity(p)
 					   .type(MediaType.APPLICATION_JSON)
 					   .build();
@@ -39,6 +47,11 @@ public class ProductService {
 	public Collection<Product> getAllProduct(){
 		Query qr = em.createQuery("select p from Product p");
 		return qr.getResultList();
+	}
+	
+	public Product getProductById(Long id) {
+		Product p = (Product) em.find(Product.class, id);
+		return p;
 	}
 	
 }
