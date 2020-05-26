@@ -79,7 +79,7 @@ public class ProductController {
 	}
 	
 	@GET
-	@Path("/get/{id}")
+	@Path("/getbycat/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getProductByIdCategory(@PathParam("id") long id) {
 		Product p = productService.getProductByIdCategory(id);
