@@ -54,7 +54,25 @@ public class CategoryService {
 	@SuppressWarnings("unchecked")
 	public Collection<Category> getAllCategories(){
 		return em.createQuery("select c from Category c").getResultList();
-		
+	}
+	
+	public Response update(Category c) {
+		try {
+			System.out.println(c.getJSON().toString());
+			em.merge(c);
+		}catch(Exception e){
+			return Response.status(Response.Status.NOT_ACCEPTABLE)
+		            .entity("{\n"
+		            		+ "\t \"error\": \"" + e.getMessage() +  "\"\n"
+		            		+ "}")
+		            .type(MediaType.APPLICATION_JSON)
+		            .build();
+		}
+
+		return Response.status(Response.Status.OK)
+	            .entity(c.getJSON().toString())
+	            .type(MediaType.APPLICATION_JSON)
+	            .build();
 	}
 	
 }
