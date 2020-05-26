@@ -55,11 +55,11 @@ public class ProductService {
 	}
 	
 	
-	public Product getProductByIdCategory(Long id) {
+	public Collection<Product> getProductByIdCategory(Long id) {
 		try {
 		Query qr = em.createQuery("select p from Product p where p.productCategory_id=:id");
 		qr.setParameter("id", id);
-		return (Product) qr.getSingleResult();
+		return (Collection<Product>) qr.getResultList();
 		}catch(Exception e) {
 			return null;
 		}

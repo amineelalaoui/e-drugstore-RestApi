@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import model.Category;
+import model.Product;
 
 @Stateless
 public class CategoryService {
@@ -54,48 +55,12 @@ public class CategoryService {
 	@SuppressWarnings("unchecked")
 	public Collection<Category> getAllCategories(){
 		return em.createQuery("select c from Category c").getResultList();
+		
 	}
 	
-	public Response update(Category c) {
-		try {
-			System.out.println(c.getJSON().toString());
-			em.merge(c);
-		}catch(Exception e){
-			return Response.status(Response.Status.NOT_ACCEPTABLE)
-		            .entity("{\n"
-		            		+ "\t \"error\": \"" + e.getMessage() +  "\"\n"
-		            		+ "}")
-		            .type(MediaType.APPLICATION_JSON)
-		            .build();
-		}
-
-		return Response.status(Response.Status.OK)
-	            .entity(c.getJSON().toString())
-	            .type(MediaType.APPLICATION_JSON)
-	            .build();
-	}
-	
-	public boolean delete(Category c) {
-		try {
-			em.remove(c);
-		}catch(Exception e){
-			return false;
-		}
-
-		return true;
-	}
-	
-	public boolean deleteById(Long id) {
-		Query qr = em.createQuery("SELECT c from Category c where c.id=:id");
-		qr.setParameter("id", id);
-		Category c = (Category) qr.getSingleResult();
-		try {
-			em.remove(c);
-		}catch(Exception e){
-			return false;
-		}
-
-		return true;
+	public Category getCategoryById(Long id) {
+		Category p = (Category) em.find(Category.class, id);
+		return p;
 	}
 	
 }
