@@ -10,6 +10,7 @@ import org.jboss.resteasy.plugins.interceptors.CorsFilter;
 import controller.CatalogController;
 import controller.CategoryController;
 import controller.ClientController;
+import controller.OrderController;
 import controller.ProductController;
 
 @ApplicationPath("/rest")
@@ -29,6 +30,7 @@ public class MainApplication extends Application {
         resources.add(CatalogController.class);
         resources.add(ProductController.class);
         resources.add(CategoryController.class);
+        resources.add(OrderController.class);
 	}
 	
 	@Override
